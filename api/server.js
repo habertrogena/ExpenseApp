@@ -5,10 +5,7 @@ const cors = require("cors");
 const path = require('path')
 const dotenv = require("dotenv");
 
-//create a server and listen to a port
-// connect the app with the database
-// test the connections
-// create a database if it doest exist.
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -18,9 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 dotenv.config();
 
-app.get("", (req, res) => {
-  res.send("this is my website");
-});
+
 
 //create a database connection.
 const db = mysql.createConnection({
@@ -150,6 +145,16 @@ app.post('/api/expenses', (req, res) => {
     return res.status(200).json('Expense added successfully');
   });
 });
+
+//logic to fetch expense data from the database 
+app.get('/api/transactions',(req,res)=>{
+  const query = `SELECT * FROM expenses`
+
+  db.query(query, (err, data) => {
+    if (err) return res.status(500).json("Something went wrong");
+    res.status(200).json(data);
+  });
+})
 
 app.listen(port, () => {
   console.log(`App is runing on port ${port}`);
