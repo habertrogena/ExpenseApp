@@ -52,6 +52,20 @@ db.connect((err) => {
         if (err) return console.log(err);
         console.log("users table created sucessfully");
       });
+      //create a expenses table
+      const createExpensesTable = `
+      CREATE TABLE IF NOT EXISTS expenses (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        amount DECIMAL(10, 2) NOT NULL,
+        date DATE NOT NULL,
+        type VARCHAR(50) NOT NULL
+      )
+      `
+    db.query(createExpensesTable, (err, result) => {
+      if (err) return console.log(err);
+      console.log(" expenses table created sucessfully");
+    });
     });
   });
 });
@@ -115,6 +129,27 @@ return res.status(200).json('login sucessfull')
     
   }
 })
+
+//expenses route
+app.post('/api/expenses', (req, res) => {
+  const { type, name, amount, date } = req.body;
+  console.log("Request body:", req.body);
+
+  if (!type || !name || !amount || !date) {
+    console.log('about to throw an error');
+    return res.status(400).json('Missing required fields');
+  }
+
+  const newExpense = `INSERT INTO expenses (type, name, amount, date) VALUES (?, ?, ?, ?)`;
+
+  const values = [type, name, amount, date];
+
+  db.query(newExpense, values, (err, result) => {
+    if (err) return res.status(500).json('Failed to add expense');
+    
+    return res.status(200).json('Expense added successfully');
+  });
+});
 
 app.listen(port, () => {
   console.log(`App is runing on port ${port}`);

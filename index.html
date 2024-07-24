@@ -47,11 +47,12 @@
           </div>
           <div>
             <label for="name">Name</label>
-            <input type="text" name="name" required />
+            <input id="name" type="text" name="name" required />
           </div>
           <div>
             <label for="amount">Amount</label>
             <input
+            id="amount"
               type="number"
               name="amount"
               value="0"
@@ -62,13 +63,14 @@
           </div>
           <div>
             <label for="date">Date</label>
-            <input type="date" name="date" required />
+            <input id="date" type="date" name="date" required />
           </div>
-          <button type="submit">Submit</button>
+          <input type="submit" value="Submit">
+          <p id="response-msg"></p>
         </form>
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <script src="./expenses.js"></script>
   </body>
 </html>
