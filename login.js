@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        alert('clicked')
+        
         
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 authMsg.textContent = "Invalid email or password!"
             } else {
                 authMsg.textContent = "Login successfull"
+                window.location.href = 'index.html';
             }
 
         } catch (err) {
