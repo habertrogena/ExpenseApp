@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('An error occurred:', err);
         }
     };
-
+//function to format the date
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
