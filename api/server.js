@@ -6,6 +6,7 @@ const path = require('path')
 const dotenv = require("dotenv");
 
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -25,15 +26,19 @@ const db = mysql.createConnection({
 });
 
 db.connect((err) => {
+
   if (err) return console.log("error connecting to mysql", err);
   console.log("connected to mysql sucessfully");
+
   // create a database
-  db.query(`CREATE DATABASE IF NOT EXISTS expense_tracker`, (err, results) => {
+  db.query(`CREATE DATABASE IF NOT EXISTS caspio`, (err, results) => {
     if (err) return console.log(err);
-    console.log("Database expense tracker created sucessfully");
+    console.log("Database caspio created sucessfully");
+
     //select the database
-    db.changeUser({ database: "expense_tracker" }, (err) => {
-      console.log("changed to expense tracker");
+    db.changeUser({ database: "caspio" }, (err) => {
+      console.log("changed to caspio");
+
       // create a users table
       const createUserTable = `
             CREATE TABLE IF NOT EXISTS users (
@@ -47,9 +52,11 @@ db.connect((err) => {
         if (err) return console.log(err);
         console.log("users table created sucessfully");
       });
-      //create a expenses table
-      const createExpensesTable = `
-      CREATE TABLE IF NOT EXISTS expenses (
+
+
+      //create a payment table
+      const createPaymentTable = `
+      CREATE TABLE IF NOT EXISTS payments (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         amount DECIMAL(10, 2) NOT NULL,
@@ -57,10 +64,11 @@ db.connect((err) => {
         type VARCHAR(50) NOT NULL
       )
       `
-    db.query(createExpensesTable, (err, result) => {
+    db.query(createPaymentTable, (err, result) => {
       if (err) return console.log(err);
-      console.log(" expenses table created sucessfully");
+      console.log(" payment table created sucessfully");
     });
+
     });
   });
 });
